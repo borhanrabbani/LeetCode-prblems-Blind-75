@@ -19,3 +19,50 @@ class Solution {
         return new ArrayList<>(hm.values());
     }
 }
+
+// Eclipse workspace solution
+
+package com.test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+public class GroupAnagrams {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		HashMap<String, List<String>> hm = new HashMap<>();
+		
+		String[] strs = {"eat","tea","tan","ate","nat","bat"};
+				
+		
+		for(int i=0; i<strs.length; i++) {
+			String s = strs[i];
+			char[] tempChar = s.toCharArray();
+			Arrays.sort(tempChar);
+			String str = new String(tempChar);
+			
+			if(hm.containsKey(str)) {
+				hm.get(str).add(s);
+			}else {
+				hm.put(str, new ArrayList<>());
+				hm.get(str).add(s);
+			}
+		}
+		
+		System.out.println(Arrays.asList(hm));
+		
+//		for(String test: hm.keySet()) {
+//			System.out.println(test);
+			for(List<String> al: hm.values()) {
+				System.out.print(al);
+			}
+//		}
+		
+
+	}
+
+}
