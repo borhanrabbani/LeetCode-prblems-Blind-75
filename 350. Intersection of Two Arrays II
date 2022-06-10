@@ -1,0 +1,27 @@
+// My solution
+
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+    ArrayList<Integer> al1 = new ArrayList();
+		ArrayList<Integer> al2 = new ArrayList(); 
+		
+		for (int i = 0; i < nums1.length; i++) {
+			al1.add(nums1[i]);
+		}
+
+		for (int j = 0; j < nums2.length; j++) {
+			if (al1.contains(nums2[j])) {
+				al2.add(nums2[j]);
+				Integer temp = (Integer) nums2[j];
+				al1.remove(temp);
+			}
+		}
+		
+
+		int newArr[] = new int[al2.size()];
+		for (int i = 0; i < al2.size(); i++) {
+			newArr[i] = al2.get(i);
+		}
+        return newArr;
+    }
+}
