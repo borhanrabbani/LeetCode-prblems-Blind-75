@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/squares-of-a-sorted-array/submissions/
+
 package com.test;
 
 import java.util.Arrays;
@@ -12,6 +14,9 @@ public class SquaresofaSortedArray {
 		int j=nums.length-1;
 		
 		int[] res = new int[nums.length];
+		
+// In this portion I tried to solve this problem without using another Array, 
+// for some test cases it was satisfied but failed for some other test cases.	
 		
 //		while(j!=i) {
 //			if(Math.abs(nums[i])<Math.abs(nums[j])) {
