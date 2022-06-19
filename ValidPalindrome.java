@@ -1,3 +1,8 @@
+// https://leetcode.com/problems/valid-palindrome/submissions/
+
+// This problem can be solved by using java built in functions, but i tried to solve it without built in function except toLoweCase() 
+
+
 package com.test;
 
 public class ValidPalindrome {
