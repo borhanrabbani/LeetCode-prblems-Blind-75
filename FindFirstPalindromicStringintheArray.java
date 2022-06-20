@@ -1,3 +1,6 @@
+// https://leetcode.com/problems/find-first-palindromic-string-in-the-array/submissions/
+// I was able to solve this problem at first attempt. 
+
 package com.test;
 
 public class FindFirstPalindromicStringintheArray {
