@@ -1,0 +1,33 @@
+// https://leetcode.com/problems/self-dividing-numbers/
+
+// My solution
+
+class Solution {
+    public List<Integer> selfDividingNumbers(int left, int right) {
+        List<Integer> list = new ArrayList<Integer>();
+        
+        for(int i=left; i<= right; i++) {
+			
+			String str = ""+i+"";
+			boolean flag =true;
+			for(int j=0; j<str.length(); j++) {
+				int n = str.charAt(j) -'0';
+				if(n==0) {
+					flag=false;
+					break;
+				}
+				if(i%n==0) {
+					flag=true;
+				}else {
+					flag = false;
+					break;
+				}
+			}
+			if(flag==true) {
+				list.add(i);
+			}
+        }
+        
+        return list;
+    }
+}
