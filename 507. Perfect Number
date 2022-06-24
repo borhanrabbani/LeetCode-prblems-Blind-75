@@ -18,3 +18,23 @@ class Solution {
         return false;
     }
 }
+
+
+// below solution passed all the test cases, because it doesn't check all numbers iteratively.
+
+class Solution {
+    public boolean checkPerfectNumber(int num) {
+        if(num==1){
+            return false;
+        }
+        
+        int counter =1;
+		for(int i=2; i<Math.sqrt(num); i++) {
+			if(num%i==0) {
+				counter += i+num/i;
+			}
+		}
+        
+        return counter==num;
+    }
+}
