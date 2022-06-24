@@ -1,0 +1,20 @@
+// https://leetcode.com/problems/perfect-number/
+
+// First solution finds the correct answer, but while submitting it shows time limit exceeds.
+
+class Solution {
+    public boolean checkPerfectNumber(int num) {
+        int counter =0;
+		for(int i=1; i<num; i++) {
+			if(num%i==0) {
+				counter=counter+ i;
+			}
+		}
+        
+        if(num==counter){
+            return true;
+        }
+        
+        return false;
+    }
+}
