@@ -36,6 +36,16 @@ public class MissingNumber {
 		int temp = resultCount - givenCount;
 		
 		System.out.println(temp);
+		
+		// Easiest approach, XOR/bit manipulation. Efficient
+		int res= 0;
+		int k=0;
+		
+		for(; k<nums.length; k++) {
+			res = res^k^nums[k];
+		}
+		
+		System.out.println(res^k);
 	}
 
 }
