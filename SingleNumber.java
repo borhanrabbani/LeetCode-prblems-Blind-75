@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/single-number/
+
 package com.math;
 
 import java.util.HashSet;
@@ -8,7 +10,9 @@ public class SingleNumber {
 	public static void main(String[] args) {
 
 		int[] nums = { 4, 1, 2, 1, 2, 1, 2, 2 };
-
+		
+		// Uses of set made this code less efficient.
+		
 		Set<Integer> set = new HashSet<Integer>();
 		for (int i = 0; i < nums.length; i++) {
 			if (set.contains(nums[i])) {
@@ -23,6 +27,8 @@ public class SingleNumber {
 			t = s;
 		}
 
+// 		Below is the XOR operation, which solves this problem in constant time.
+		
 		int ret = 0;
 		for (int i = 0; i < nums.length; i++) {
 			ret = ret ^ nums[i];
