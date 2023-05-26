@@ -20,7 +20,7 @@ public class UglyNumber {
 		}
 		return false;
 	}
-	
+	// another solution
 	public boolean isUgly1(int n) {
 		if( n==0) {
 			return false;
