@@ -1,0 +1,52 @@
+// https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+package tree;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class InorderTraversal {
+	
+	// Recursive solution
+	
+	public List<Integer> inorderTraversal(TreeNode root){
+		List<Integer> list = new ArrayList<Integer>();
+		inOrder(root, list);
+		return list;
+	}
+	
+	public void inOrder(TreeNode root, List<Integer> list){
+		if(root==null) {
+			return;
+		}
+		inOrder(root.left,list);
+		list.add(root.val);
+		inOrder(root.right,list);
+	}
+	
+	//Recursive end
+
+	public static void main(String[] args) {
+		
+		InorderTraversal it = new InorderTraversal();
+		
+		TreeNode root = new TreeNode(1);
+
+		TreeNode n2 = new TreeNode(2);
+		TreeNode n3 = new TreeNode(3);
+		TreeNode n4 = new TreeNode();
+		TreeNode n5 = new TreeNode();
+		TreeNode n6 = new TreeNode(7);
+//		TreeNode n7 = new TreeNode(11);
+//		TreeNode n8 = new TreeNode(1);
+		
+		root.right = n2;
+
+		n2.left = n3;
+//		n2.right = n6;
+//		n5.left = n7;
+//		n6.right = n8;
+		
+		System.out.println(it.inorderTraversal(root));
+	}
+
+}
