@@ -3,6 +3,7 @@ package tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class InorderTraversal {
 	
@@ -24,7 +25,33 @@ public class InorderTraversal {
 	}
 	
 	//Recursive end
-
+	
+	// Iterative solution
+	
+	public List<Integer> inorderIterativeTraversal(TreeNode root){
+		List<Integer> list = new ArrayList<Integer>();
+		Stack<TreeNode> stack = new Stack<>();
+		TreeNode cur;
+		cur=root;
+		
+		while(!stack.isEmpty() || cur != null) {
+			if(cur != null) {
+				stack.push(cur);
+				cur=cur.left;
+			}else {
+				cur=stack.pop();
+				list.add(cur.val);
+				cur=cur.right;
+			}
+		}
+		
+		return list;
+	}
+		
+	
+	// Iterative end
+	
+	
 	public static void main(String[] args) {
 		
 		InorderTraversal it = new InorderTraversal();
@@ -50,3 +77,4 @@ public class InorderTraversal {
 	}
 
 }
+
