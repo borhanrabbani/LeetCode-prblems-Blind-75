@@ -1,0 +1,55 @@
+package tree;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Stack;
+
+public class NAryPostorderTraversal {
+
+    public List<Integer> postorder(NaryNode root) {
+        List<Integer> list = new ArrayList<Integer>();
+        Stack<NaryNode> stack = new Stack<>();
+
+        if (root == null)
+            return list;
+
+        stack.add(root);
+
+        while (!stack.isEmpty()) {
+            NaryNode node = stack.pop();
+            list.add(node.val);
+
+//            Collections.reverse(node.child); // for pre-order traversal comment out this line and comment line 30
+
+            for (NaryNode temp : node.child) {
+                stack.push(temp);
+            }
+        }
+
+        Collections.reverse(list);
+        return list;
+        
+    }
+
+    public static void main(String[] args) {
+        NaryNode node5 = new NaryNode(5);
+        NaryNode node6 = new NaryNode(6);
+        NaryNode node2 = new NaryNode(2);
+        NaryNode node3 = new NaryNode(3);
+        NaryNode node4 = new NaryNode(4);
+
+        // Build the tree structure
+        node3.child.add(node5);
+        node3.child.add(node6);
+
+        NaryNode root = new NaryNode(1);
+        root.child.add(node3);
+        root.child.add(node2);
+        root.child.add(node4);
+
+        NAryPostorderTraversal npt = new NAryPostorderTraversal();
+
+        System.out.println(npt.postorder(root));
+    }
+}
