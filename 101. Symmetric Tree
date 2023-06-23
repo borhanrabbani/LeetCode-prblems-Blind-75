@@ -1,0 +1,61 @@
+package tree;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class SymmetricTree {
+
+	public boolean isSymmetric(TreeNode root) {
+		
+		if(root==null) {
+			return false;
+		}
+		
+		Queue<TreeNode> queue = new LinkedList<>();
+		
+		queue.offer(root.left);
+		queue.offer(root.right);
+		
+		while(!queue.isEmpty()) {
+			TreeNode leftNode = queue.poll();
+			TreeNode rightNode = queue.poll();
+			
+			if(leftNode==null && rightNode==null) {
+				continue;
+			}
+			if(leftNode==null || rightNode==null || leftNode.val!=rightNode.val) {
+				return false;
+			}
+			
+			queue.offer(leftNode.left);
+			queue.offer(rightNode.right);
+			queue.offer(leftNode.right);
+			queue.offer(rightNode.left);
+		}
+		
+		return true;
+	}
+
+	public static void main(String[] args) {
+		TreeNode node1 = new TreeNode(1);
+        TreeNode node2a = new TreeNode(2);
+        TreeNode node2b = new TreeNode(2);
+        TreeNode node3a = new TreeNode(3);
+        TreeNode node3b = new TreeNode(3);
+        TreeNode node4a = new TreeNode(4);
+        TreeNode node4b = new TreeNode(4);
+
+        // Build the tree structure
+        node1.left = node2a;
+        node1.right = node2b;
+        node2a.left = node3a;
+        node2a.right = node4a;
+        node2b.left = node4b;
+        node2b.right = node3b;
+        
+        SymmetricTree st = new SymmetricTree();
+        System.out.println(st.isSymmetric(node1));
+
+	}
+
+}
