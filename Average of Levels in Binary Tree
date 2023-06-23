@@ -1,0 +1,58 @@
+package tree;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+public class AverageofLevelsinBinaryTree {
+	
+	public List<Double> averageOfLevels(TreeNode root) {
+		
+		List<Double> res = new ArrayList<>();
+		Queue<TreeNode> queue = new LinkedList<>();
+		queue.offer(root);
+		
+		while(!queue.isEmpty()) {
+			int levelSize = queue.size();
+			double levelSum = 0;
+			
+			for(int i=0; i<levelSize; i++) {
+				TreeNode node = queue.poll();
+				levelSum += node.val;
+				
+				if(node.left!=null) {
+					queue.offer(node.left);
+				}
+				if(node.right!=null) {
+					queue.offer(node.right);
+				}
+			}
+			
+			double avg = levelSum/levelSize;
+			res.add(avg);
+		}
+		return res;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		TreeNode node3 = new TreeNode(3);
+        TreeNode node9 = new TreeNode(9);
+        TreeNode node20 = new TreeNode(20);
+        TreeNode node15 = new TreeNode(15);
+        TreeNode node7 = new TreeNode(7);
+
+        // Build the tree structure
+        node3.left = node9;
+        node3.right = node20;
+        node20.left = node15;
+        node20.right = node7;
+        
+        AverageofLevelsinBinaryTree alb = new AverageofLevelsinBinaryTree();
+        System.out.println(alb.averageOfLevels(node3));
+
+	}
+
+}
