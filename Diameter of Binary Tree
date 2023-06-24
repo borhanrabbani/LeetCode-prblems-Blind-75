@@ -1,0 +1,49 @@
+package tree;
+
+public class DiameterofBinaryTree {
+	
+	public int diameterOfBianyTree(TreeNode root) {
+		if(root==null) {
+			return 0;
+		}
+		
+		int leftHeight = getHeight(root.left);
+		int rightHeight = getHeight(root.right);
+		
+		int leftDiameter = diameterOfBianyTree(root.left);
+		int rightDiameter = diameterOfBianyTree(root.right);
+		
+		int rootDiameter = leftHeight + rightHeight;
+		
+		return Math.max(Math.max(leftDiameter, rightDiameter), rootDiameter); 
+	}
+	
+	public int getHeight(TreeNode node) {
+		if(node==null) {
+			return 0;
+		}
+		
+		int leftHeight = getHeight(node.left);
+		int rightHeight = getHeight(node.right);
+		
+		return Math.max(leftHeight, rightHeight)+1;
+	}
+
+	public static void main(String[] args) {
+		TreeNode root = new TreeNode(1);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node3 = new TreeNode(3);
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node5 = new TreeNode(5);
+
+        root.left = node2;
+        root.right = node3;
+        node2.left = node4;
+        node2.right = node5;
+        
+        DiameterofBinaryTree dbt = new DiameterofBinaryTree();
+        System.out.println(dbt.diameterOfBianyTree(root));
+
+	}
+
+}
