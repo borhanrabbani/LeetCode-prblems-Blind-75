@@ -1,0 +1,55 @@
+package tree;
+
+public class BalancedBinaryTree {
+	
+	public boolean isBalanced(TreeNode root) {
+		if(root==null) {
+			return true;
+		}
+		
+		if(getHeight(root)==-1) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public int getHeight(TreeNode node) {
+		if(node==null) {
+			return 0;
+		}
+		
+		int leftHeight = getHeight(node.left);
+		int rightHeight = getHeight(node.right);
+		
+		if(leftHeight==-1 || rightHeight==-1) {
+			return -1;
+		}
+		
+		if(Math.abs(rightHeight-leftHeight)>1) {
+			return -1;
+		}
+		
+		return Math.max(leftHeight, rightHeight)+1;
+	}
+
+	public static void main(String[] args) {
+		
+		BalancedBinaryTree bt = new BalancedBinaryTree();
+		
+		TreeNode root = new TreeNode(3);
+        TreeNode node1 = new TreeNode(9);
+        TreeNode node2 = new TreeNode(20);
+        TreeNode node3 = new TreeNode(15);
+        TreeNode node4 = new TreeNode(7);
+
+        root.left = node1;
+        root.right = node2;
+        node2.left = node3;
+        node2.right = node4;
+        
+        System.out.println(bt.isBalanced(root));
+
+	}
+
+}
