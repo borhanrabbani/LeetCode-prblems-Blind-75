@@ -1,0 +1,44 @@
+package neetcode;
+
+public class ReverseVowelsofString {
+	
+	public String reverseVowel(String s) {
+        int end = s.length() - 1;
+        int start = 0;
+        char temp;
+        char[] myChar = s.toCharArray();
+        
+        while(start<end) {
+        	while(start<end && !isVowel(myChar[start])) {
+        		start++;
+        	}
+        	while(start<end && !isVowel(myChar[end])) {
+        		end--;
+        	}
+        	
+        	if(start<end) {
+        		temp=myChar[start];
+        		myChar[start]=myChar[end];
+        		myChar[end]=temp;
+        	}
+        	start++;
+        	end--;
+        }
+
+        return new String(myChar);
+    }
+	
+	public boolean isVowel(char ch) {
+		ch=Character.toLowerCase(ch);
+		return ch=='a'|| ch=='e' || ch =='i' || ch=='o'|| ch=='u';
+	}
+
+	public static void main(String[] args) {
+		ReverseVowelsofString rv = new ReverseVowelsofString();
+		System.out.println(rv.reverseVowel("leetcode"));
+
+	}
+	
+	//leotcede
+
+}
