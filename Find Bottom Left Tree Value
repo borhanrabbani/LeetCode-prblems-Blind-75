@@ -1,0 +1,50 @@
+package tree;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class FindBottomLeftTreeValue {
+
+	public int findBottomLeftValue(TreeNode root) {
+		
+		Queue<TreeNode> queue = new LinkedList<>();
+		
+		queue.offer(root);
+		
+		while(!queue.isEmpty()) {
+			TreeNode node = queue.poll();
+			
+			if(node.left!=null) {
+				queue.offer(node.left);
+			}
+			if(node.right!=null) {
+				queue.offer(node.right);
+			}
+			
+			if(node.left==null && node.right==null && queue.isEmpty()) {
+				return node.val;
+			}
+		}
+		
+		return root.val;
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		FindBottomLeftTreeValue fb = new FindBottomLeftTreeValue();
+		
+		TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+        root.right.left = new TreeNode(5);
+        root.right.right = new TreeNode(6);
+        root.right.left.left = new TreeNode(7);
+        
+        System.out.println(fb.findBottomLeftValue(root));
+
+	}
+
+}
