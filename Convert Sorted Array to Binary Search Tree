@@ -1,0 +1,53 @@
+package tree;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+public class ConvertSortedArraytoBST {
+
+	public TreeNode sortedArrayToBST(int[] nums) {
+		
+		return constructBST(nums, 0, nums.length-1);
+
+	}
+	
+	public TreeNode constructBST(int[] nums, int start, int end) {
+		if(start>end) {
+			return null;
+		}
+		
+		int mid = (start+end)/2; 
+		
+		TreeNode node = new TreeNode(nums[mid]);
+		
+		node.left = constructBST(nums, start, mid-1);
+		node.right = constructBST(nums, mid+1, end);
+		
+		return node;
+	}
+
+	public static void main(String[] args) {
+		
+		int[] arr = {-10,-3,0,5,9};
+		
+		ConvertSortedArraytoBST bst = new ConvertSortedArraytoBST();
+		TreeNode result = bst.sortedArrayToBST(arr);
+		
+		Queue<TreeNode> Q = new LinkedList<>();
+		Q.offer(result);
+		
+		while(!Q.isEmpty()) {
+			TreeNode temp = Q.poll();
+			System.out.println(temp.val);
+			
+			if(temp.left!=null)
+				Q.offer(temp.left);
+			if(temp.right!=null)
+				Q.offer(temp.right);
+		}
+		
+	}
+
+}
