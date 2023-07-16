@@ -1,0 +1,44 @@
+// https://leetcode.com/problems/island-perimeter/description/
+
+package graph;
+
+public class IslandPerimeter {
+
+	public int islandPerimeter(int[][] grid) {
+
+		int numRow = grid.length;
+		int numCol = grid[0].length;
+		int perimeter = 0;
+
+		for (int row = 0; row < numRow; row++) {
+			for (int col = 0; col < numCol; col++) {
+				if (grid[row][col] == 1) {
+					if (col == 0 || grid[row][col - 1] == 0) {
+                        perimeter++;
+                    }
+                    if (col == numCol - 1 || grid[row][col + 1] == 0) {
+                        perimeter++;
+                    }
+                    if (row == 0 || grid[row - 1][col] == 0) {
+                        perimeter++;
+                    }
+                    if (row == numRow - 1 || grid[row + 1][col] == 0) {
+                        perimeter++;
+                    }
+				}
+			}
+		}
+
+		return perimeter;
+
+	}
+
+	public static void main(String[] args) {
+
+		int[][] grid = { { 0, 1, 0, 0 }, { 1, 1, 1, 0 }, { 0, 1, 0, 0 }, { 1, 1, 0, 0 } };
+
+		IslandPerimeter ip = new IslandPerimeter();
+		System.out.println(ip.islandPerimeter(grid));
+	}
+
+}
