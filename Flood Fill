@@ -1,0 +1,60 @@
+// https://leetcode.com/problems/flood-fill/description/
+
+package graph;
+
+public class FloodFill {
+	
+	public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+		
+		int origColor = image[sr][sc];
+		
+		if(origColor != color) {
+			dfs(image, sr, sc, origColor, color);
+		}
+		
+		return image;
+
+	}
+	
+	public void dfs(int[][] image, int row, int col, int origColor, int newColor) {
+		
+		int numRow = image.length;
+		int numCol = image[0].length;
+		
+		if(row<0 || row>=numRow || col<0 || col>=numCol || image[row][col]!=origColor) {
+			return;
+		}
+		
+		image[row][col]=newColor;
+		
+		dfs(image, row+1, col, origColor, newColor);
+		dfs(image, row-1, col, origColor, newColor);
+		dfs(image, row, col+1, origColor, newColor);
+		dfs(image, row, col-1, origColor, newColor);
+	}
+	
+	
+
+	public static void main(String[] args) {
+		int[][] image = {
+	            {1, 1, 1},
+	            {0, 1, 0},
+	            {1, 0, 1}
+	        };
+	        int sr = 1;
+	        int sc = 1;
+	        int newColor = 2;
+
+	        FloodFill floodFill = new FloodFill();
+	        int[][] newImage = floodFill.floodFill(image, sr, sc, newColor);
+	        
+	        for(int[] row: newImage) {
+	        	for(int pixel: row) {
+	        		System.out.print(pixel + " ");
+	        	}
+	        	System.out.println();
+	        }
+
+	}
+
+}
