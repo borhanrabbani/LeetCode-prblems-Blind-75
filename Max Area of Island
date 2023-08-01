@@ -1,0 +1,61 @@
+package graph;
+
+public class MaxAreaofIsland {
+
+	public int maxAreaOfIsland(int[][] grid) {
+		int maxArea = 0;
+		int row = grid.length;
+		int col = grid[0].length;
+		
+		for(int i=0; i<row; i++) {
+			for(int j=0; j<col; j++) {
+				if(grid[i][j]==1) {
+					int area = dfs(grid, i, j);
+					maxArea = Math.max(maxArea, area);
+				}
+			}
+		}		
+
+		return maxArea;
+	}
+	
+	private int dfs(int[][] grid, int row, int col) {
+		int numRows = grid.length;
+		int numCols = grid[0].length;
+		
+		if(row<0 || col<0 || row>=numRows || col>=numCols || grid[row][col] == 0) {
+			return 0;
+		}
+		
+		
+		grid[row][col]=0; // Mark the cell as visited by setting it to 0 (assuming 0 represents water or visited cells).
+		
+		int area = 1;
+		
+		// Recursively explore all neighboring cells (up, down, left, right).
+		area += dfs(grid, row+1, col);
+		area += dfs(grid, row-1, col);
+		area += dfs(grid, row, col+1);
+		area += dfs(grid, row, col-1);
+		
+		return area;
+		
+	}
+
+	public static void main(String[] args) {
+		
+		int[][] grid ={{0,0,1,0,0,0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1,1,1,0,0,0},
+				{0,1,1,0,1,0,0,0,0,0,0,0,0},
+				{0,1,0,0,1,1,0,0,1,0,1,0,0},
+				{0,1,0,0,1,1,0,0,1,1,1,0,0},
+				{0,0,0,0,0,0,0,0,0,0,1,0,0},
+				{0,0,0,0,0,0,0,1,1,1,0,0,0},
+				{0,0,0,0,0,0,0,1,1,0,0,0,0}};
+		
+		MaxAreaofIsland areaIsland = new MaxAreaofIsland();
+		System.out.println(areaIsland.maxAreaOfIsland(grid));
+
+	}
+
+}
