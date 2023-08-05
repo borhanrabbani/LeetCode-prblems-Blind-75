@@ -1,0 +1,61 @@
+package graph;
+
+public class CountSubIslands {
+	
+	int[][] directions = {{1,0},{-1,0},{0,1},{0,-1}};
+
+	public int countSubIslands(int[][] grid1, int[][] grid2) {
+		int row = grid1.length;
+		int col = grid1[0].length;
+		
+		int subIsland = 0;
+		
+		for(int i=0; i<row; i++) {
+			for(int j=0; j<col; j++) {
+				if(grid2[i][j]==1) {
+					if(isSubIsland(grid1, grid2, i, j)) {
+						subIsland++;
+					}
+				}
+			}
+		}
+		
+		return subIsland;
+	}
+	
+	private boolean isSubIsland(int[][] grid1, int[][] grid2, int i, int j) {
+		int row1 = grid1.length;
+		int col1 = grid1[0].length;
+		
+		if(i<0 || i>=row1 || j<0 || j>=col1 || grid2[i][j]==0) {
+			return true;
+		}
+		
+		if(grid1[i][j]==0) {
+			return false;
+		}
+		
+		grid2[i][j]=0; //  Mark the cell as visited by setting it to 0 (assuming 0 represents water or visited cells).		
+		
+		boolean isSub = true;
+		
+		for(int[] direction: directions) {
+			int newRow = i+direction[0];
+			int newCol = j+direction[1];
+			
+			isSub &= isSubIsland(grid1, grid2, newRow, newCol);
+		}
+		
+		return isSub;
+	}
+
+	public static void main(String[] args) {
+		CountSubIslands csi = new CountSubIslands();
+		
+		int[][] grid1 = {{1,1,1,0,0},{0,1,1,1,1},{0,0,0,0,0},{1,0,0,0,0},{1,1,0,1,1}};
+		int[][] grid2 = {{1,1,1,0,0},{0,0,1,1,1},{0,1,0,0,0},{1,0,1,1,0},{0,1,0,1,0}};
+		
+		System.out.println(csi.countSubIslands(grid1, grid2));
+	}
+
+}
