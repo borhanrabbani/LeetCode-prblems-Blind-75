@@ -1,0 +1,86 @@
+package graph;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PacificAtlanticWaterFlow {
+
+	public List<List<Integer>> pacificAtlantic(int[][] heights) {
+		
+		List<List<Integer>> result = new ArrayList<>();
+		
+		int m = heights.length;
+		int n = heights[0].length;
+		
+		boolean[][] pacificReachable = new boolean[m][n];
+		boolean[][] atlanticReachable = new boolean[m][n];
+		
+		for(int i=0; i<m; i++) {
+			depthfs(heights, pacificReachable, Integer.MIN_VALUE, i, 0);
+			depthfs(heights, atlanticReachable, Integer.MIN_VALUE, i, n-1);
+		}
+		
+		for(int j=0; j<n; j++) {
+			depthfs(heights, pacificReachable, Integer.MIN_VALUE, 0, j);
+			depthfs(heights, atlanticReachable, Integer.MIN_VALUE, m-1, j);
+		}
+		
+		for(int i=0; i<m; i++) {
+			for(int j=0; j<n; j++) {
+				if(pacificReachable[i][j] && atlanticReachable[i][j]) {
+					List<Integer> coord = new ArrayList<>();
+					coord.add(i);
+					coord.add(j);
+					result.add(coord);
+				}
+			}
+		}
+
+		return result;
+	}
+	
+	public void depthfs(int[][] heights, boolean[][] reachable, int prevHeight, int row, int col ) {
+		int m = heights.length;
+		int n = heights[0].length;
+		
+		if(row<0 || row>=m || col<0 || col>=n || reachable[row][col] || heights[row][col]<prevHeight) {
+			return;
+		}
+		
+		reachable[row][col]=true;
+		
+		int[] dr = {-1, 0, 1, 0};
+		int[] dc = {0, -1, 0, 1};
+		
+		for(int i=0; i<4; i++) {
+			int newRow = row + dr[i];
+			int newCol = col + dc[i];
+			
+			if(newRow >=0 && newRow<m && newCol>=0 && newCol<n && heights[newRow][newCol]>=heights[row][col]) {
+				depthfs(heights, reachable, heights[row][col], newRow, newCol);
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		
+		PacificAtlanticWaterFlow pacAt = new PacificAtlanticWaterFlow();
+		
+		int[][] matrix = {
+	            {1, 2, 2, 3, 5},
+	            {3, 2, 3, 4, 4},
+	            {2, 4, 5, 3, 1},
+	            {6, 7, 1, 4, 5},
+	            {5, 1, 1, 2, 4}
+	        };
+	        
+	        List<List<Integer>> result = pacAt.pacificAtlantic(matrix);
+	        
+	        System.out.println("Cells from which water can flow to both Pacific and Atlantic Oceans:");
+	        for (List<Integer> coord : result) {
+	            System.out.println(coord);
+	        }
+
+	}
+
+}
