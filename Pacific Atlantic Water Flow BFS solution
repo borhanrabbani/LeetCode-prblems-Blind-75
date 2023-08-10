@@ -1,0 +1,99 @@
+package graph;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+public class PacificAtlanticWaterFlowBFS {
+
+	public List<List<Integer>> solution(int[][] heights) {
+
+		List<List<Integer>> result = new ArrayList<>();
+
+		int m = heights.length;
+		int n = heights[0].length;
+
+		boolean[][] pacificReachable = new boolean[m][n];
+		boolean[][] atlanticReachable = new boolean[m][n];
+		
+		Queue<int[]> pacificQueue = new LinkedList<>();
+		Queue<int[]> atlanticQueue = new LinkedList<int[]>();
+		
+		for(int i=0; i<m; i++) {
+			pacificQueue.offer(new int[] {i,0});
+			atlanticQueue.offer(new int[] {i,n-1});
+			pacificReachable[i][0]=true;
+			atlanticReachable[i][n-1]=true;
+		}
+		
+		for(int i=0; i<n; i++) {
+			pacificQueue.offer(new int[] {0,i});
+			atlanticQueue.offer(new int[] {m-1,i});
+			pacificReachable[0][i]=true;
+			atlanticReachable[m-1][i]=true;
+		}
+		
+		pacAtlBfs(heights, pacificQueue, pacificReachable);
+		pacAtlBfs(heights, atlanticQueue, atlanticReachable);
+		
+		for(int i=0; i<m; i++) {
+			for(int j=0; j<n; j++) {
+				if(pacificReachable[i][j] && atlanticReachable[i][j]) {
+					List<Integer> coord = new ArrayList<>();
+					coord.add(i);
+					coord.add(j);
+					result.add(coord);
+					
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	private void pacAtlBfs(int[][] heights, Queue<int[]> queue, boolean[][] reachable) {
+		int m = heights.length;
+		int n = heights[0].length;
+		
+		int[] dr = {-1, 0, 1, 0};
+		int[] dc = {0, 1, 0, -1};
+		
+		while(!queue.isEmpty()) {
+			int[] cell = queue.poll();
+			
+			int row = cell[0];
+			int col = cell[1];
+			
+			for(int i=0; i<4; i++) {
+				int newRow = row + dr[i];
+				int newCol = col + dc[i];
+				
+				if(newRow >= 0 && newRow < m && newCol>=0 && newCol<n && !reachable[newRow][newCol] && heights[newRow][newCol] >= heights[row][col]) {
+					reachable[newRow][newCol] = true;
+					queue.offer(new int[] {newRow, newCol});
+				}
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		PacificAtlanticWaterFlowBFS pabfs = new PacificAtlanticWaterFlowBFS();
+		
+		int[][] matrix = {
+	            {1, 2, 2, 3, 5},
+	            {3, 2, 3, 4, 4},
+	            {2, 4, 5, 3, 1},
+	            {6, 7, 1, 4, 5},
+	            {5, 1, 1, 2, 4}
+	        };
+	        
+	        List<List<Integer>> result = pabfs.solution(matrix);
+	        
+	        System.out.println("Cells from which water can flow to both Pacific and Atlantic Oceans:");
+	        for (List<Integer> coord : result) {
+	            System.out.println(coord);
+	        }
+	}
+
+}
