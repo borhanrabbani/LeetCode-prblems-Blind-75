@@ -1,0 +1,100 @@
+https://leetcode.com/problems/clone-graph/description/
+package graph;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+
+public class CloneGraph {
+
+	public AdjNode cloneGraph(AdjNode node) {
+		if (node == null) {
+			return null;
+		}
+
+		Map<AdjNode, AdjNode> visited = new HashMap<>();
+		AdjNode clone = new AdjNode(node.val);
+
+		visited.put(node, clone);
+
+		Queue<AdjNode> queue = new LinkedList<>();
+		queue.add(node);
+
+		while (!queue.isEmpty()) {
+			AdjNode currNode = queue.poll();
+
+			for (AdjNode nei : currNode.neighbors) {
+				if (!visited.containsKey(nei)) {
+					AdjNode neighborClone = new AdjNode(nei.val);
+					visited.put(nei, neighborClone);
+					queue.add(nei);
+				}
+				AdjNode currClone = visited.get(currNode);
+				AdjNode neighborClone = visited.get(nei);
+				currClone.neighbors.add(neighborClone);
+			}
+		}
+
+		return clone;
+	}
+
+	public static void main(String[] args) {
+		CloneGraph cg = new CloneGraph();
+		
+		// Create nodes
+		AdjNode node1 = new AdjNode(1);
+		AdjNode node2 = new AdjNode(2);
+        AdjNode node3 = new AdjNode(3);
+        AdjNode node4 = new AdjNode(4);
+
+        // Connect neighbors
+        node1.neighbors.add(node2);
+        node1.neighbors.add(node4);
+        node2.neighbors.add(node1);
+        node2.neighbors.add(node3);
+        node3.neighbors.add(node2);
+        node3.neighbors.add(node4);
+        node4.neighbors.add(node1);
+        node4.neighbors.add(node3);
+
+        // Clone the graph
+        AdjNode clonedNode = cg.cloneGraph(node1);
+
+        // Print the original and cloned graph structure
+        System.out.println("Original Graph:");
+        printGraph(node1);
+        
+        System.out.println("\nCloned Graph:");
+        printGraph(clonedNode);
+        
+	}
+	
+	private static void printGraph(AdjNode node) {
+		Set<AdjNode> visited = new HashSet<>();
+	    Queue<AdjNode> queue = new LinkedList<>();
+	    queue.add(node);
+
+	    while (!queue.isEmpty()) {
+	        AdjNode currNode = queue.poll();
+
+	        if (!visited.contains(currNode)) {
+                visited.add(currNode);
+                System.out.print("[" + currNode.val + ", [");
+
+                for (int i = 0; i < currNode.neighbors.size(); i++) {
+                    AdjNode neighbor = currNode.neighbors.get(i);
+                    System.out.print(neighbor.val);
+                    if (i < currNode.neighbors.size() - 1) {
+                        System.out.print(", ");
+                    }
+                    queue.add(neighbor);
+                }
+
+                System.out.println("]]");
+	        }
+	    }
+    }
+}
