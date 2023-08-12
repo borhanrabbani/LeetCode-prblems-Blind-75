@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 
 public class CloneGraphDFS {
 
@@ -19,6 +20,7 @@ public class CloneGraphDFS {
 		return cloneGraphDFS(node, visited);
 	}
 
+	// Recursive DFS
 	private AdjNode cloneGraphDFS(AdjNode node, Map<AdjNode, AdjNode> visited) {
 		if (visited.containsKey(node)) {
 			return visited.get(node);
@@ -31,6 +33,38 @@ public class CloneGraphDFS {
 			clone.neighbors.add(cloneGraphDFS(neighbor, visited));
 		}
 
+		return clone;
+	}
+	
+	// Iterative DFS
+	public AdjNode cloneGraphIterativeDFS(AdjNode node) {
+		if(node==null) {
+			return null;
+		}
+		
+		Map<AdjNode, AdjNode> visited = new HashMap<>();
+		
+		AdjNode clone = new AdjNode(node.val);
+		
+		visited.put(node, clone);
+		
+		Stack<AdjNode> stack = new Stack<>();
+		stack.push(node);
+		
+		while(!stack.isEmpty()) {
+			AdjNode currNode = stack.pop();
+			
+			for(AdjNode neighbor: currNode.neighbors) {
+				if(!visited.containsKey(neighbor)) {
+					AdjNode neighborClone = new AdjNode(neighbor.val);
+					visited.put(neighbor, neighborClone);
+					stack.push(neighbor);
+				}
+				visited.get(currNode).neighbors.add(visited.get(neighbor));
+			}
+			
+		}
+		
 		return clone;
 	}
 
@@ -54,7 +88,7 @@ public class CloneGraphDFS {
 		node4.neighbors.add(node3);
 
 		// Clone the graph
-		AdjNode clonedNode = cgdfs.solution(node1);
+		AdjNode clonedNode = cgdfs.cloneGraphIterativeDFS(node1);
 
 		// Print the original and cloned graph structure
 		System.out.println("Original Graph:");
